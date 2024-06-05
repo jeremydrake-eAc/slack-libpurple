@@ -23,7 +23,7 @@ PURPLE_MOD=purple
 ifeq ($(OS),Windows_NT)
 
 LIBNAME=libslack.dll
-PIDGIN_TREE_TOP ?= ../pidgin-2.10.11
+PIDGIN_TREE_TOP ?= ../pidgin-2.13.0
 WIN32_DEV_TOP ?= $(PIDGIN_TREE_TOP)/../win32-dev
 WIN32_CC ?= $(WIN32_DEV_TOP)/mingw-4.7.2/bin/gcc
 
@@ -32,7 +32,7 @@ ifndef PROGFILES32
 PROGFILES32=$(PROGRAMFILES)
 endif
 
-CC = $(WIN32_DEV_TOP)/mingw-4.7.2/bin/gcc
+CC ?= $(WIN32_DEV_TOP)/mingw-4.7.2/bin/gcc
 
 DATA_ROOT_DIR_PURPLE:="$(PROGFILES32)/Pidgin"
 PLUGIN_DIR_PURPLE:="$(DATA_ROOT_DIR_PURPLE)/plugins"
@@ -43,9 +43,8 @@ CFLAGS = \
     -D_DEFAULT_SOURCE=1 \
     -D_XOPEN_SOURCE=1 \
     -std=c99 \
-	-I$(PIDGIN_TREE_TOP)/libpurple \
-	-I$(WIN32_DEV_TOP)/glib-2.28.8/include -I$(WIN32_DEV_TOP)/glib-2.28.8/include/glib-2.0 -I$(WIN32_DEV_TOP)/glib-2.28.8/lib/glib-2.0/include
-LIBS = -L$(WIN32_DEV_TOP)/glib-2.28.8/lib -L$(PIDGIN_TREE_TOP)/libpurple -lpurple -lintl -lglib-2.0 -lgobject-2.0 -g -ggdb -static-libgcc -lz -lws2_32 
+	-I$(WIN32_DEV_TOP)/gtk_2_0-2.14/include -I$(WIN32_DEV_TOP)/gtk_2_0-2.14/include/glib-2.0 -I$(WIN32_DEV_TOP)/gtk_2_0-2.14/lib/glib-2.0/include -I$(WIN32_DEV_TOP)/gtk_2_0-2.14/gio-2.0 -DENABLE_NLS -I$(PIDGIN_TREE_TOP)/libpurple -I$(PIDGIN_TREE_TOP) -I$(WIN32_DEV_TOP)/libxml2-2.9.2_daa1/include/libxml2
+LIBS = -L$(PIDGIN_TREE_TOP)/libpurple -L$(PIDGIN_TREE_TOP)/libpurple/protocols/jabber/ -L$(WIN32_DEV_TOP)/gtk_2_0-2.14/lib -L$(WIN32_DEV_TOP)/libxml2-2.9.2_daa1/lib -lpurple -lintl -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lxml2 -g -ggdb -static-libgcc -lz -lws2_32
 
 else
 
